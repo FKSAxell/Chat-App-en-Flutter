@@ -1,3 +1,4 @@
+import 'package:chat/widgets/custom_input.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -63,11 +64,14 @@ class __FormState extends State<_Form> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(top: 40),
+      padding: EdgeInsets.symmetric(horizontal: 50),
       child: Column(
         children: [
-          TextField(),
-          TextField(),
-          ElevatedButton(child: Text('Login'), onPressed: () {})
+          CustomInput(),
+
+          //TODO: crear boton
+          // ElevatedButton(child: Text('Login'), onPressed: () {})
         ],
       ),
     );
