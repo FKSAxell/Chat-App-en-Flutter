@@ -61,6 +61,9 @@ class _Form extends StatefulWidget {
 }
 
 class __FormState extends State<_Form> {
+  final emailCtrl = TextEditingController();
+  final passCtrl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -68,10 +71,27 @@ class __FormState extends State<_Form> {
       padding: EdgeInsets.symmetric(horizontal: 50),
       child: Column(
         children: [
-          CustomInput(),
+          CustomInput(
+            icon: Icons.mail_outline,
+            placeholder: 'Correo',
+            keyboardType: TextInputType.emailAddress,
+            textController: emailCtrl,
+          ),
+          CustomInput(
+            icon: Icons.lock_outline,
+            placeholder: 'Contraseña',
+            isPassword: true,
+            // keyboardType: TextInputType.emailAddress,
+            textController: passCtrl,
+          ),
 
           //TODO: crear boton
-          // ElevatedButton(child: Text('Login'), onPressed: () {})
+          ElevatedButton(
+              child: Text('Login'),
+              onPressed: () {
+                print(emailCtrl.text);
+                print(passCtrl.text);
+              })
         ],
       ),
     );
@@ -92,7 +112,7 @@ class _Logo extends StatelessWidget {
               height: 20,
             ),
             Text(
-              'Messenger',
+              'Chatgram',
               style: TextStyle(fontSize: 30),
             )
           ],
