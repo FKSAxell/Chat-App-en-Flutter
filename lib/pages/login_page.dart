@@ -10,20 +10,30 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xffF2F2F2),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Logo(),
-            _Form(),
-            Labels(),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Text(
-                'Términos y condiciones de uso',
-                style: TextStyle(fontWeight: FontWeight.w300),
-              ),
-            )
-          ],
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.9,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Logo(titulo: 'PioChat'),
+                _Form(),
+                Labels(
+                  mensaje: '¿No tienes cuenta?',
+                  textVinculo: 'Crea una ahora!',
+                  ruta: 'register',
+                ),
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Text(
+                    'Términos y condiciones de uso',
+                    style: TextStyle(fontWeight: FontWeight.w300),
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -59,7 +69,13 @@ class __FormState extends State<_Form> {
             // keyboardType: TextInputType.emailAddress,
             textController: passCtrl,
           ),
-          BtnAzul()
+          BtnAzul(
+            text: 'Ingresar',
+            onPressed: () {
+              print(emailCtrl.text);
+              print(passCtrl.text);
+            },
+          )
         ],
       ),
     );

@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
 class BtnAzul extends StatelessWidget {
+  final String text;
+  final Function onPressed;
+
+  const BtnAzul({
+    Key key,
+    @required this.text,
+    @required this.onPressed,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -14,7 +22,7 @@ class BtnAzul extends StatelessWidget {
         width: double.infinity,
         child: Center(
           child: Text(
-            'Ingresar',
+            this.text,
             style: TextStyle(
               color: Colors.white,
               fontSize: 17,
@@ -22,9 +30,7 @@ class BtnAzul extends StatelessWidget {
           ),
         ),
       ),
-      onPressed: () {
-        print('valores');
-      },
+      onPressed: this.onPressed,
     );
   }
 }
