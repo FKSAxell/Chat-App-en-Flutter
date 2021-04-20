@@ -75,7 +75,7 @@ class __FormState extends State<_Form> {
             textController: passCtrl,
           ),
           BtnAzul(
-            text: 'Ingresar',
+            text: 'Registrar',
             onPressed: () {
               print(emailCtrl.text);
               print(passCtrl.text);

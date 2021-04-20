@@ -1,5 +1,6 @@
 import 'package:chat/models/usuario.dart';
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class UsuariosPage extends StatefulWidget {
   @override
@@ -7,6 +8,9 @@ class UsuariosPage extends StatefulWidget {
 }
 
 class _UsuariosPageState extends State<UsuariosPage> {
+  RefreshController _refreshController = RefreshController(
+    initialRefresh: false,
+  );
   final usuarios = [
     Usuario(
       uid: '1',
@@ -38,7 +42,9 @@ class _UsuariosPageState extends State<UsuariosPage> {
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: Icon(Icons.exit_to_app, color: Colors.black54),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, 'login');
+          },
         ),
         actions: [
           Container(
@@ -48,25 +54,52 @@ class _UsuariosPageState extends State<UsuariosPage> {
           )
         ],
       ),
-      body: ListView.separated(
-        physics: BouncingScrollPhysics(),
-        itemBuilder: (_, i) => ListTile(
-          title: Text(usuarios[i].nombre),
-          leading: CircleAvatar(
-            child: Text(usuarios[i].nombre.substring(0, 2)),
-          ),
-          trailing: Container(
-            width: 10,
-            height: 10,
-            decoration: BoxDecoration(
-              color: usuarios[i].online ? Colors.green[300] : Colors.red,
-              borderRadius: BorderRadius.circular(100),
-            ),
-          ),
+      body: SmartRefresher(
+        controller: _refreshController,
+        enablePullDown: true,
+        header: WaterDropHeader(
+          complete: Icon(Icons.check, color: Colors.blue[400]),
+          waterDropColor: Colors.blue[400],
         ),
-        separatorBuilder: (_, i) => Divider(),
-        itemCount: usuarios.length,
+        child: _ListViewUsuarios(),
+        onRefresh: _cargarUsuarios,
       ),
     );
+  }
+
+  ListView _ListViewUsuarios() {
+    return ListView.separated(
+      physics: BouncingScrollPhysics(),
+      itemBuilder: (_, i) => _usuarioListTile(usuarios[i]),
+      separatorBuilder: (_, i) => Divider(),
+      itemCount: usuarios.length,
+    );
+  }
+
+  ListTile _usuarioListTile(Usuario usuario) {
+    return ListTile(
+      onTap: () => Navigator.pushReplacementNamed(context, 'chat'),
+      title: Text(usuario.nombre),
+      subtitle: Text(usuario.email),
+      leading: CircleAvatar(
+        child: Text(usuario.nombre.substring(0, 2)),
+        backgroundColor: Colors.blue[100],
+      ),
+      trailing: Container(
+        width: 10,
+        height: 10,
+        decoration: BoxDecoration(
+          color: usuario.online ? Colors.green[300] : Colors.red,
+          borderRadius: BorderRadius.circular(100),
+        ),
+      ),
+    );
+  }
+
+  _cargarUsuarios() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
   }
 }
