@@ -1,4 +1,7 @@
+import 'package:chat/widgets/btn_azul.dart';
 import 'package:chat/widgets/custom_input.dart';
+import 'package:chat/widgets/labels.dart';
+import 'package:chat/widgets/logo.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -10,46 +13,18 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _Logo(),
+            Logo(),
             _Form(),
-            _Labels(),
-            Text(
-              'Términos y condiciones de uso',
-              style: TextStyle(fontWeight: FontWeight.w200),
+            Labels(),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Text(
+                'Términos y condiciones de uso',
+                style: TextStyle(fontWeight: FontWeight.w300),
+              ),
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _Labels extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Text(
-            '¿No tienes cuenta?',
-            style: TextStyle(
-              color: Colors.black54,
-              fontSize: 15,
-              fontWeight: FontWeight.w300,
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            'Crea una ahora!',
-            style: TextStyle(
-              color: Colors.blue[600],
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          )
-        ],
       ),
     );
   }
@@ -84,39 +59,8 @@ class __FormState extends State<_Form> {
             // keyboardType: TextInputType.emailAddress,
             textController: passCtrl,
           ),
-
-          //TODO: crear boton
-          ElevatedButton(
-              child: Text('Login'),
-              onPressed: () {
-                print(emailCtrl.text);
-                print(passCtrl.text);
-              })
+          BtnAzul()
         ],
-      ),
-    );
-  }
-}
-
-class _Logo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        margin: EdgeInsets.only(top: 50),
-        width: 170,
-        child: Column(
-          children: [
-            Image(image: AssetImage('assets/tag-logo.png')),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Chatgram',
-              style: TextStyle(fontSize: 30),
-            )
-          ],
-        ),
       ),
     );
   }
