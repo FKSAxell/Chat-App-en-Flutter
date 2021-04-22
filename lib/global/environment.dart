@@ -2,7 +2,7 @@ import 'dart:io';
 
 class Enviroment {
   static String apiUrl = Platform.isAndroid
-      ? 'http://172.20.1.39:3000/api'
+      ? 'http://192.168.1.11:3000/api'
       : 'http://localhost:3000/api';
 
   static String socketUrl =
