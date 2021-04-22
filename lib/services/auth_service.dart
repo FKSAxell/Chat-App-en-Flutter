@@ -95,7 +95,7 @@ class AuthService with ChangeNotifier {
     }
   }
 
-  Future<bool> isLoggerdIn() async {
+  Future<bool> isLoggedIn() async {
     final token = await this._storage.read(key: 'token');
     print(token);
     final resp = await http.get(
