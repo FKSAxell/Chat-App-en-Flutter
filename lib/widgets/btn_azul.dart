@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class BtnAzul extends StatelessWidget {
-  final String text;
+  // final String text;
+  final Widget child;
   final Function onPressed;
 
   const BtnAzul({
     Key key,
-    @required this.text,
+    @required this.child,
     @required this.onPressed,
   }) : super(key: key);
   @override
@@ -20,15 +21,15 @@ class BtnAzul extends StatelessWidget {
       child: Container(
         height: 55,
         width: double.infinity,
-        child: Center(
-          child: Text(
-            this.text,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 17,
+        child: Center(child: this.child
+            // Text(
+            //   this.text,
+            //   style: TextStyle(
+            //     color: Colors.white,
+            //     fontSize: 17,
+            //   ),
+            // ),
             ),
-          ),
-        ),
       ),
       onPressed: this.onPressed,
     );
