@@ -1,6 +1,8 @@
 import 'package:chat/models/usuario.dart';
 import 'package:chat/services/auth_service.dart';
+import 'package:chat/services/chat_service.dart';
 import 'package:chat/services/socket_service.dart';
+import 'package:chat/services/usuarios_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -14,26 +16,14 @@ class _UsuariosPageState extends State<UsuariosPage> {
   RefreshController _refreshController = RefreshController(
     initialRefresh: false,
   );
-  final usuarios = [
-    Usuario(
-      uid: '1',
-      nombre: 'Zarinna',
-      email: 'zarinna@correo.com',
-      online: true,
-    ),
-    Usuario(
-      uid: '2',
-      nombre: 'Eros',
-      email: 'eros@correo.com',
-      online: true,
-    ),
-    Usuario(
-      uid: '3',
-      nombre: 'Shiroe',
-      email: 'shiroe@correo.com',
-      online: false,
-    ),
-  ];
+  final usuarioService = UsuariosService();
+  List<Usuario> usuarios = [];
+
+  @override
+  void initState() {
+    this._cargarUsuarios();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +77,11 @@ class _UsuariosPageState extends State<UsuariosPage> {
 
   ListTile _usuarioListTile(Usuario usuario) {
     return ListTile(
-      onTap: () => Navigator.pushReplacementNamed(context, 'chat'),
+      onTap: () {
+        final chatService = Provider.of<ChatService>(context, listen: false);
+        chatService.usuarioPara = usuario;
+        Navigator.pushNamed(context, 'chat');
+      },
       title: Text(usuario.nombre),
       subtitle: Text(usuario.email),
       leading: CircleAvatar(
@@ -106,8 +100,10 @@ class _UsuariosPageState extends State<UsuariosPage> {
   }
 
   _cargarUsuarios() async {
+    this.usuarios = await usuarioService.getUsuario();
+    setState(() {});
     // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
+    // await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
   }
